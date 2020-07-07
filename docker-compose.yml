@@ -1,0 +1,25 @@
+version: '3'
+# docker-compose up делать из под sudo
+services:
+  #возможно что не будет ошибка, что нет прав чето создать внутри контейнера. хз че такое. 
+      #WA: закоментить volumes и через судо docker-compose up dвыполнить. #Потом раскоментить volumes и снова docker-compose up
+    pgadmin4:
+        ports:
+            - '80:80'
+        container_name: pgadmin4
+        image: dpage/pgadmin4
+        volumes:
+          - ./volumes/pgadmin4:/var/lib/pgadmin
+        env_file:
+          - ./env_lists/pgadmin-env.list
+
+    postgres:
+      image: postgres
+      container_name: postgres
+      hostname: postgres
+      ports:
+        - 5432:5432
+      volumes:
+        - ./volumes/pgdata:/pgdata
+      env_file:
+        - ./env_lists/pg-env.list     
